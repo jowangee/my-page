@@ -310,6 +310,24 @@ button:hover {
   display: none;
 }
 
+.directions-section {
+  margin-top: 8px;
+  padding: 28px 32px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 24px 60px rgba(32, 42, 71, 0.08);
+}
+
+.directions-section p {
+  margin: 0 0 20px;
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+.directions-section .consultation-btn {
+  margin-top: 0;
+}
+
 @media (max-width: 840px) {
   .hero-section {
     grid-template-columns: 1fr;
