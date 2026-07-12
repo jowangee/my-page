@@ -356,6 +356,85 @@ button:hover {
   margin-top: 0;
 }
 
+.contact-form-section {
+  margin-top: 24px;
+  padding: 28px 32px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 24px 60px rgba(32, 42, 71, 0.08);
+}
+
+.contact-form-section p {
+  margin: 0 0 20px;
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+.inquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-row label {
+  color: #374151;
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.inquiry-form input[type='text'],
+.inquiry-form textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #111827;
+  background: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inquiry-form input[type='text']:focus,
+.inquiry-form textarea:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.inquiry-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.inquiry-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.form-status {
+  margin: 4px 0 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  min-height: 1.2em;
+}
+
+.form-status.success {
+  color: #047857;
+}
+
+.form-status.error {
+  color: #b91c1c;
+}
+
 @media (max-width: 840px) {
   .hero-section {
     grid-template-columns: 1fr;

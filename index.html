@@ -71,6 +71,53 @@
         </a>
       </div>
     </section>
+
+    <section class="contact-form-section">
+      <div class="section-header">
+        <span>&#9993;</span>
+        <h2>상담 · 문의 남기기</h2>
+      </div>
+      <p>아래 내용을 남겨주시면 확인 후 연락드리겠습니다.</p>
+      <form id="inquiryForm" class="inquiry-form">
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+        <input type="hidden" name="subject" value="[홈페이지 문의] 새 상담 문의가 접수되었습니다" />
+        <input type="hidden" name="from_name" value="박영란 변호사 홈페이지" />
+        <input
+          type="checkbox"
+          name="botcheck"
+          style="display: none"
+          tabindex="-1"
+          autocomplete="off"
+        />
+
+        <div class="form-row">
+          <label for="name">성함</label>
+          <input type="text" id="name" name="성함" required placeholder="홍길동" />
+        </div>
+        <div class="form-row">
+          <label for="contact">연락처</label>
+          <input
+            type="text"
+            id="contact"
+            name="연락처"
+            required
+            placeholder="전화번호 또는 이메일"
+          />
+        </div>
+        <div class="form-row">
+          <label for="message">문의 내용</label>
+          <textarea
+            id="message"
+            name="문의내용"
+            rows="5"
+            required
+            placeholder="문의하실 내용을 간단히 적어주세요."
+          ></textarea>
+        </div>
+        <button type="submit" id="submitBtn">문의 보내기</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </section>
   </main>
 
   <script src="script.js"></script>
