@@ -143,6 +143,11 @@ img {
   z-index: 5;
 }
 
+/* 상단 문구 강제 줄바꿈: 기본은 숨김(데스크톱 한 줄), 모바일에서만 표시 */
+.tagline-break {
+  display: none;
+}
+
 .hero-title {
   display: flex;
   align-items: baseline;
@@ -489,6 +494,11 @@ body {
   .hero-tagline {
     white-space: normal;
     font-size: clamp(1.5rem, 6vw, 2.2rem);
+  }
+
+  /* 모바일에서 "당신과 함께하는 / 법률전문 전략파트너"로 고정 줄바꿈 */
+  .tagline-break {
+    display: inline;
   }
 
   .hero-text {
