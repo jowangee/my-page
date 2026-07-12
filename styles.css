@@ -470,3 +470,70 @@ button:hover {
     width: 100%;
   }
 }
+
+/* ===== 모바일 반응형 보정 (화면 폭 맞춤) ===== */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+@media (max-width: 840px) {
+  .hero-section {
+    min-height: auto;
+  }
+
+  /* 상단 문구가 화면을 넘지 않도록 줄바꿈 허용 (핵심 수정) */
+  .hero-tagline {
+    white-space: normal;
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+  }
+
+  .hero-text {
+    margin-top: 24px;
+  }
+
+  .consultation-btn {
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 560px) {
+  /* 장식용 뱃지가 본문을 가리지 않게 축소 */
+  .badge-image {
+    width: 110px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .hero-tagline {
+    font-size: clamp(1.4rem, 6.5vw, 1.9rem);
+  }
+
+  .hero-name {
+    font-size: 2rem;
+  }
+
+  .hero-role {
+    font-size: 1.2rem;
+  }
+
+  .hero-text {
+    font-size: 1.05rem;
+  }
+
+  /* 카드 좌우 여백 축소로 내용 폭 확보 */
+  .directions-section,
+  .contact-form-section {
+    padding: 22px 18px;
+  }
+
+  .consultation-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .map-embed iframe {
+    height: 240px;
+  }
+}
