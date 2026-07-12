@@ -136,6 +136,8 @@ img {
   line-height: 1.05;
   letter-spacing: 0.02em;
   white-space: nowrap;
+  /* 줄바꿈 시 어절(단어) 단위로만 끊기도록 (한글) */
+  word-break: keep-all;
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
   position: relative;
   z-index: 5;
