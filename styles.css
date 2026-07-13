@@ -3,6 +3,12 @@
   color: #1c1f28;
   background: #f7f8fb;
   font-family: 'Apple SD Gothic Neo', Pretendard, 'Malgun Gothic', sans-serif;
+
+  /* 리치 골드 (상담예약·문의·봉투·강조) */
+  --gold-light: #e8c34a;
+  --gold-dark: #b8860b;
+  --gold-text: #a97e12;
+  --gold-shadow: rgba(184, 134, 11, 0.3);
 }
 
 * {
@@ -126,13 +132,16 @@ img {
   padding: 0;
   background: transparent;
   box-shadow: none;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-tagline {
-  margin: 0 0 12px;
-  color: #b88715;
-  font-size: clamp(1.8rem, 2.3vw, 2.4rem);
-  font-weight: 800;
+  margin: 0 0 24px;
+  color: var(--gold-text);
+  font-family: 'Gowun Dodum', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  font-size: clamp(1.5rem, 2vw, 2.05rem);
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0.02em;
   white-space: nowrap;
@@ -150,35 +159,52 @@ img {
 
 .hero-title {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   gap: 12px;
-  margin: 8px 0 0;
+  margin: 22px 0 0;
 }
 
+.hero-emblem {
+  height: clamp(2.4rem, 4vw, 3.1rem);
+  width: auto;
+  flex: none;
+  margin-bottom: 2px;
+}
+
+/* 명함 스타일: 법률사무소(검정·작게) + 영란(로즈골드·크게) */
 .hero-role {
-  font-size: clamp(1.4rem, 2.1vw, 1.6rem);
-  color: #111827;
-  font-weight: 900;
-  letter-spacing: 0.02em;
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  color: #1a1a1a;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  font-family: Pretendard, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
 }
 
 .hero-name {
-  font-size: clamp(2.2rem, 3.5vw, 2.8rem);
-  color: #111827;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  font-family: Pretendard, 'Noto Sans KR', sans-serif;
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  color: #b98c74;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  font-family: 'Nanum Square Round', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
 }
 
 .hero-text {
   margin: 64px 0 0;
   color: #4b5563;
-  font-size: 1.15rem;
-  font-weight: 600;
-  line-height: 1.8;
-  font-family: '굴림', Gulim, sans-serif;
-  font-stretch: 70%;
+  font-size: 1.24rem;
+  font-weight: 500;
+  line-height: 1.9;
+  font-family: 'Sunflower', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   letter-spacing: -0.01em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.hero-text .sign-name {
+  font-family: 'Gowun Dodum', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 
@@ -290,19 +316,49 @@ button:hover {
   gap: 10px;
   margin-top: 72px;
   padding: 12px 24px;
-  background: linear-gradient(135deg, #d4af37 0%, #b88715 100%);
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-dark) 100%);
   color: #ffffff;
   font-size: 1.05rem;
   font-weight: 700;
   text-decoration: none;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.28);
+  box-shadow: 0 8px 24px var(--gold-shadow);
   transition: all 0.3s ease;
 }
 
 .consultation-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.36);
+  box-shadow: 0 12px 32px var(--gold-shadow);
+}
+
+/* 히어로 버튼 묶음 (상담예약 + 블로그) */
+.hero-actions {
+  margin-top: 72px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-actions .consultation-btn {
+  margin-top: 0;
+  font-size: 0.88rem;
+  padding: 10px 13px;
+  white-space: nowrap;
+}
+
+/* 블로그: 골드 아웃라인 보조 버튼 */
+.blog-btn {
+  padding: 10px 22px;
+  background: transparent;
+  color: var(--gold-text);
+  border: 2px solid var(--gold-dark);
+  box-shadow: none;
+}
+
+.blog-btn:hover {
+  background: rgba(184, 134, 11, 0.08);
+  box-shadow: none;
 }
 
 .phone-icon {
@@ -359,8 +415,94 @@ button:hover {
   margin-top: 0;
 }
 
+/* 네이버 지도 버튼 = 네이버 브랜드 그린 */
+.direction-links .naver-btn {
+  background: linear-gradient(135deg, #06c95c 0%, #02b24d 100%);
+  box-shadow: 0 8px 24px rgba(3, 199, 90, 0.28);
+}
+
+.direction-links .naver-btn:hover {
+  box-shadow: 0 12px 32px rgba(3, 199, 90, 0.4);
+}
+
 .directions-section .consultation-btn {
   margin-top: 0;
+}
+
+/* ===== 변호사 소개 (약력 · 주요활동) ===== */
+.profile-section {
+  margin-top: 8px;
+  margin-bottom: 24px;
+  padding: 28px 32px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 24px 60px rgba(32, 42, 71, 0.08);
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 44px;
+}
+
+.profile-block {
+  min-width: 0;
+}
+
+.profile-subtitle {
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid rgba(184, 134, 11, 0.45);
+}
+
+.profile-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.profile-list li {
+  position: relative;
+  padding-left: 18px;
+  color: #4b5563;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.profile-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-dark);
+}
+
+.profile-list .org {
+  color: #111827;
+  font-weight: 700;
+}
+
+@media (max-width: 840px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
+
+@media (max-width: 560px) {
+  .profile-section {
+    padding: 22px 18px;
+  }
 }
 
 .contact-form-section {
@@ -442,6 +584,20 @@ button:hover {
   color: #b91c1c;
 }
 
+/* ===== 문의 섹션: 봉투 아이콘 + 전송 버튼 = 상담예약과 같은 골드 ===== */
+.contact-form-section .section-header span {
+  color: var(--gold-dark);
+}
+
+#submitBtn {
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-dark) 100%);
+  color: #ffffff;
+}
+
+#submitBtn:hover {
+  box-shadow: 0 16px 32px var(--gold-shadow);
+}
+
 @media (max-width: 840px) {
   .hero-section {
     grid-template-columns: 1fr;
@@ -508,6 +664,16 @@ body {
   .consultation-btn {
     margin-top: 28px;
   }
+
+  .hero-actions {
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .hero-actions .consultation-btn {
+    font-size: 1rem;
+    padding: 14px 22px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -523,15 +689,19 @@ body {
   }
 
   .hero-name {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .hero-role {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
+  }
+
+  .hero-emblem {
+    height: 2.1rem;
   }
 
   .hero-text {
-    font-size: 1.05rem;
+    font-size: 1.14rem;
   }
 
   /* 카드 좌우 여백 축소로 내용 폭 확보 */
