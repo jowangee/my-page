@@ -169,7 +169,6 @@ img {
   display: flex;
   align-items: flex-end;
   gap: 12px;
-  transform: translateY(-0.28rem); /* 엠블럼 가운데선쯤으로 살짝 올림 */
 }
 
 .hero-emblem {
