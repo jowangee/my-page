@@ -159,7 +159,7 @@ img {
 
 .hero-title {
   display: flex;
-  align-items: flex-end;
+  align-items: baseline;
   gap: 12px;
   margin: 22px 0 0;
 }
@@ -177,7 +177,6 @@ img {
   color: #1a1a1a;
   font-weight: 800;
   letter-spacing: 0.01em;
-  line-height: 1;
   font-family: Pretendard, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
 }
 
@@ -694,7 +693,7 @@ body {
   }
 
   .hero-role {
-    font-size: 1.25rem;
+    font-size: 1.45rem;
   }
 
   .hero-emblem {
