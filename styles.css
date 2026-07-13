@@ -159,16 +159,22 @@ img {
 
 .hero-title {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 12px;
   margin: 22px 0 0;
+}
+
+/* 법률사무소 + 영란: 한 묶음으로 묶어 아랫선(글자 박스 하단) 기준 정렬 */
+.hero-title-text {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
 }
 
 .hero-emblem {
   height: clamp(2.4rem, 4vw, 3.1rem);
   width: auto;
   flex: none;
-  margin-bottom: 2px;
 }
 
 /* 명함 스타일: 법률사무소(검정·작게) + 영란(로즈골드·크게) */
@@ -177,6 +183,7 @@ img {
   color: #1a1a1a;
   font-weight: 800;
   letter-spacing: 0.01em;
+  line-height: 1;
   font-family: Pretendard, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
 }
 
