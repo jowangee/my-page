@@ -198,6 +198,9 @@ img {
 
 .hero-text {
   margin: 64px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em; /* 소개글 안 문단 사이 간격(기존 빈 줄보다 축소) */
   color: #4b5563;
   font-size: 1.24rem;
   font-weight: 500;
@@ -206,6 +209,10 @@ img {
   letter-spacing: -0.01em;
   word-break: keep-all;
   overflow-wrap: break-word;
+}
+
+.hero-text p {
+  margin: 0;
 }
 
 .hero-text .sign-name {
@@ -709,6 +716,13 @@ body {
 
   .hero-text {
     font-size: 1.14rem;
+    margin-top: 80px; /* 소개글 상단 간격 확대 */
+    gap: 0.9em; /* 모바일 안쪽 문단 간격 살짝 더 축소 */
+  }
+
+  /* 소개글 하단(버튼과의) 간격 확대 */
+  .hero-actions {
+    margin-top: 52px;
   }
 
   /* 카드 좌우 여백 축소로 내용 폭 확보 */
