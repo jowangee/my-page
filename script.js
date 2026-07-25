@@ -21,7 +21,8 @@ if (copyPhoneBtn) {
   });
 }
 
-// 문의 폼: Supabase 데이터베이스에 저장 + Web3Forms로 이메일 알림
+// 문의 폼: Web3Forms 이메일(주 채널) + Supabase 저장(부가, 기록용)
+// 이메일과 DB 저장을 서로 독립 실행 → Supabase가 정지·장애여도 이메일은 항상 발송됨.
 // (아래 두 값은 공개되어도 되는 값 — publishable key는 브라우저용 공개 키이며,
 //  RLS 규칙으로 익명 사용자는 저장만 되고 열람은 불가하도록 보호됨)
 const SUPABASE_URL = 'https://fmudsxqzbxkxxlzqgctl.supabase.co';
@@ -31,7 +32,7 @@ const inquiryForm = document.getElementById('inquiryForm');
 const formStatus = document.getElementById('formStatus');
 const submitBtn = document.getElementById('submitBtn');
 
-// Supabase inquiries 테이블에 저장 (필수)
+// Supabase inquiries 테이블에 저장 (부가 — 기록 보관용. 실패해도 이메일과 무관)
 async function saveInquiryToSupabase({ name, contact, message }) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/inquiries`, {
     method: 'POST',
@@ -48,16 +49,17 @@ async function saveInquiryToSupabase({ name, contact, message }) {
   }
 }
 
-// Web3Forms로 이메일 알림 (부가 기능 — 실패해도 저장은 유지)
+// Web3Forms 이메일 알림 (주 채널 — 문의 도달을 보장하는 핵심 경로)
+// 실패 시 예외를 던져 상위에서 성패를 판단할 수 있게 함.
 async function sendEmailNotification(payload) {
-  try {
-    await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(payload),
-    });
-  } catch (error) {
-    console.warn('이메일 알림 실패(저장은 완료됨):', error);
+  const res = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.success === false) {
+    throw new Error('이메일 발송 실패: ' + (data.message || res.status));
   }
 }
 
@@ -73,22 +75,29 @@ if (inquiryForm) {
     const message = document.getElementById('message').value.trim();
     const emailPayload = Object.fromEntries(new FormData(inquiryForm).entries());
 
-    try {
-      // 1) 데이터베이스에 저장 (필수)
-      await saveInquiryToSupabase({ name, contact, message });
-      // 2) 이메일 알림 (부가)
-      await sendEmailNotification(emailPayload);
+    // 이메일(주 채널)과 DB 저장(부가)을 서로 독립적으로 실행.
+    // Supabase가 정지·장애 상태여도 이메일 발송은 영향을 받지 않는다.
+    const [emailResult, dbResult] = await Promise.allSettled([
+      sendEmailNotification(emailPayload),
+      saveInquiryToSupabase({ name, contact, message }),
+    ]);
 
+    const emailOk = emailResult.status === 'fulfilled';
+    const dbOk = dbResult.status === 'fulfilled';
+
+    if (!emailOk) console.error('이메일 발송 실패:', emailResult.reason);
+    if (!dbOk) console.warn('DB 저장 실패(이메일은 별도 채널로 처리됨):', dbResult.reason);
+
+    // 이메일 또는 DB 중 하나라도 성공하면 접수 성공으로 처리.
+    if (emailOk || dbOk) {
       formStatus.textContent = '문의가 정상적으로 접수되었습니다. 확인 후 연락드리겠습니다.';
       formStatus.className = 'form-status success';
       inquiryForm.reset();
-    } catch (error) {
+    } else {
       formStatus.textContent =
         '전송에 실패했습니다. 잠시 후 다시 시도하시거나 062-223-2030으로 연락 주세요.';
       formStatus.className = 'form-status error';
-      console.error(error);
-    } finally {
-      submitBtn.disabled = false;
     }
+    submitBtn.disabled = false;
   });
 }
