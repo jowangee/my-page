@@ -1,0 +1,34 @@
+# Supabase 무료 티어 휴면 방지 (keep-alive)
+# 매일 클라우드에서 Supabase REST에 가벼운 조회를 1건 보내
+# "활동 중" 상태로 유지해 7일 미사용 자동 휴면을 예방한다.
+# (URL과 publishable/anon 키는 이미 브라우저 코드에 공개된 값이라 그대로 사용)
+name: supabase-keepalive
+
+on:
+  schedule:
+    # 매일 00:17 UTC (한국시간 09:17)에 실행. 정각을 피해 지연 위험을 줄임.
+    - cron: '17 0 * * *'
+  workflow_dispatch: {} # 수동 실행(테스트)용
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Supabase REST ping
+        env:
+          SUPABASE_URL: https://fmudsxqzbxkxxlzqgctl.supabase.co
+          SUPABASE_ANON_KEY: sb_publishable_jgGpVScWO0RepLVUy0VdVA_Xg-tBzFH
+        run: |
+          echo "핑 시각: $(date -u) UTC"
+          code=$(curl -s -o /dev/null -w '%{http_code}' -m 20 \
+            "${SUPABASE_URL}/rest/v1/inquiries?select=id&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
+          echo "HTTP 응답: ${code}"
+          # 2xx면 정상 활동으로 간주. 그 외에는 실패 처리해 로그에 남긴다.
+          if [ "${code}" -ge 200 ] && [ "${code}" -lt 300 ]; then
+            echo "✅ keep-alive 성공 — 프로젝트 활동 갱신됨"
+          else
+            echo "⚠️ 예상치 못한 응답(${code}) — 프로젝트 상태 점검 필요"
+            exit 1
+          fi
