@@ -61,55 +61,6 @@ async function sendEmailNotification(payload) {
   }
 }
 
-// ── 회원 로그인: Supabase Auth (구글 OAuth) ──────────────────────────
-// 코드 쪽은 이걸로 끝. 실제 작동하려면 Supabase 대시보드에서 Google 공급자를
-// 켜고(웹 클라이언트 ID·Secret 등록), 사이트/리디렉션 URL을 배포주소로 설정해야 함.
-(function initGoogleAuth() {
-  if (!window.supabase || !window.supabase.createClient) {
-    console.warn('supabase-js 로드 실패 — 구글 로그인 비활성화');
-    return;
-  }
-  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  const loginBtn = document.getElementById('googleLoginBtn');
-  const userBox = document.getElementById('authUser');
-  const welcome = document.getElementById('authWelcome');
-  const logoutBtn = document.getElementById('logoutBtn');
-  if (!loginBtn || !userBox) return;
-
-  function render(session) {
-    const user = session && session.user;
-    if (user) {
-      const meta = user.user_metadata || {};
-      const name = meta.full_name || meta.name || user.email || '회원';
-      welcome.textContent = `${name}님, 환영합니다`;
-      loginBtn.hidden = true;
-      userBox.hidden = false;
-    } else {
-      loginBtn.hidden = false;
-      userBox.hidden = true;
-    }
-  }
-
-  loginBtn.addEventListener('click', async () => {
-    const { error } = await sb.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: window.location.origin + window.location.pathname },
-    });
-    if (error) {
-      alert('로그인을 시작하지 못했습니다: ' + error.message);
-      console.error(error);
-    }
-  });
-
-  logoutBtn.addEventListener('click', async () => {
-    await sb.auth.signOut();
-  });
-
-  sb.auth.getSession().then(({ data }) => render(data.session));
-  sb.auth.onAuthStateChange((_event, session) => render(session));
-})();
-
 if (inquiryForm) {
   inquiryForm.addEventListener('submit', async (event) => {
     event.preventDefault();

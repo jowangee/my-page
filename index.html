@@ -88,17 +88,6 @@
   </script>
 </head>
 <body>
-  <!-- 회원 로그인 (Supabase Auth · 구글 OAuth) -->
-  <div id="authWidget" class="auth-widget" aria-live="polite">
-    <button id="googleLoginBtn" class="auth-btn" type="button">
-      <span class="g-icon" aria-hidden="true">G</span> 구글로 로그인
-    </button>
-    <div id="authUser" class="auth-user" hidden>
-      <span id="authWelcome" class="auth-welcome"></span>
-      <button id="logoutBtn" class="auth-logout" type="button">로그아웃</button>
-    </div>
-  </div>
-
   <div class="badge-image">
     <img src="변호사뱃지.png" alt="법률사무소 영란 엠블럼" />
   </div>
@@ -253,8 +242,6 @@
     </section>
   </main>
 
-  <!-- Supabase JS (구글 로그인용) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
   <!-- Vercel Web Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
