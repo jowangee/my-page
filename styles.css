@@ -766,3 +766,38 @@ body {
 .inquiry-form input[type='file']:hover {
   border-color: var(--gold-dark);
 }
+
+/* 자주 묻는 질문 (FAQ) */
+.faq-section {
+  margin-top: 8px;
+}
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.faq-item {
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 24px rgba(32, 42, 71, 0.06);
+  border-left: 3px solid var(--gold-dark);
+}
+.faq-q {
+  margin: 0 0 8px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+.faq-q::before {
+  content: 'Q. ';
+  color: var(--gold-text);
+  font-weight: 800;
+}
+.faq-a {
+  margin: 0;
+  color: #4b5563;
+  font-size: 1rem;
+  line-height: 1.75;
+  word-break: keep-all;
+}
