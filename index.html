@@ -235,6 +235,10 @@
             placeholder="문의하실 내용을 간단히 적어주세요."
           ></textarea>
         </div>
+        <div class="form-row">
+          <label for="attachment">첨부파일 <span class="optional">(선택 · 최대 10MB)</span></label>
+          <input type="file" id="attachment" name="attachment" />
+        </div>
         <button type="submit" id="submitBtn">문의 보내기</button>
         <p class="form-note">해당내용은 &lt;법률사무소 영란&gt;의 이메일로 발송됩니다.</p>
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>

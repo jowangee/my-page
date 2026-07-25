@@ -746,3 +746,23 @@ body {
     height: 240px;
   }
 }
+
+/* 문의 폼 첨부파일 */
+.form-row .optional {
+  color: #9ca3af;
+  font-size: 0.85em;
+  font-weight: 400;
+}
+.inquiry-form input[type='file'] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  background: #fbfcfe;
+  font-size: 0.95rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+.inquiry-form input[type='file']:hover {
+  border-color: var(--gold-dark);
+}

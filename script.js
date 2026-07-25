@@ -33,7 +33,7 @@ const formStatus = document.getElementById('formStatus');
 const submitBtn = document.getElementById('submitBtn');
 
 // Supabase inquiries 테이블에 저장 (부가 — 기록 보관용. 실패해도 이메일과 무관)
-async function saveInquiryToSupabase({ name, contact, message }) {
+async function saveInquiryToSupabase({ name, contact, message, filePath }) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/inquiries`, {
     method: 'POST',
     headers: {
@@ -42,11 +42,41 @@ async function saveInquiryToSupabase({ name, contact, message }) {
       'Content-Type': 'application/json',
       Prefer: 'return=minimal',
     },
-    body: JSON.stringify({ name, contact, message }),
+    body: JSON.stringify({ name, contact, message, file_path: filePath || null }),
   });
   if (!res.ok) {
     throw new Error('Supabase 저장 실패: ' + res.status);
   }
+}
+
+// 첨부파일을 Supabase Storage(공개 버킷)에 업로드하고 다운로드 URL을 반환.
+// 파일은 추측 불가능한 무작위 경로로 저장 → 주소를 모르면 접근 불가.
+const INQUIRY_BUCKET = 'inquiry-files';
+async function uploadInquiryFile(file) {
+  const extMatch = file.name.match(/\.[a-zA-Z0-9]+$/);
+  const ext = extMatch ? extMatch[0].toLowerCase() : '';
+  const rand = (self.crypto && crypto.randomUUID
+    ? crypto.randomUUID()
+    : String(Date.now()) + Math.random()
+  ).replace(/[^a-z0-9]/gi, '');
+  const stamp = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const path = `${stamp}_${rand}${ext}`;
+
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${INQUIRY_BUCKET}/${path}`, {
+    method: 'POST',
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': file.type || 'application/octet-stream',
+      'x-upsert': 'false',
+    },
+    body: file,
+  });
+  if (!res.ok) {
+    throw new Error('첨부파일 업로드 실패: ' + res.status);
+  }
+  const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${INQUIRY_BUCKET}/${path}`;
+  return { path, publicUrl };
 }
 
 // Web3Forms 이메일 알림 (주 채널 — 문의 도달을 보장하는 핵심 경로)
@@ -73,13 +103,44 @@ if (inquiryForm) {
     const name = document.getElementById('name').value.trim();
     const contact = document.getElementById('contact').value.trim();
     const message = document.getElementById('message').value.trim();
-    const emailPayload = Object.fromEntries(new FormData(inquiryForm).entries());
+
+    // 첨부파일 처리 (선택 · 최대 10MB)
+    const fileInput = document.getElementById('attachment');
+    const file = fileInput && fileInput.files && fileInput.files[0];
+    const MAX_SIZE = 10 * 1024 * 1024;
+    if (file && file.size > MAX_SIZE) {
+      formStatus.textContent = '첨부파일이 너무 큽니다(최대 10MB). 파일을 줄여 다시 시도해 주세요.';
+      formStatus.className = 'form-status error';
+      submitBtn.disabled = false;
+      return;
+    }
+
+    // 이메일 payload: 원본 파일은 빼고 다운로드 링크만 담는다.
+    const fd = new FormData(inquiryForm);
+    fd.delete('attachment');
+    const emailPayload = Object.fromEntries(fd.entries());
+
+    // 파일이 있으면 먼저 업로드하고, 성공 시 다운로드 링크를 이메일에 첨부한다.
+    let filePath = null;
+    if (file) {
+      try {
+        const uploaded = await uploadInquiryFile(file);
+        filePath = uploaded.path;
+        emailPayload['첨부파일'] = uploaded.publicUrl;
+        emailPayload['첨부파일명'] = file.name;
+      } catch (err) {
+        console.error('첨부 업로드 실패:', err);
+        // 업로드가 실패해도 문의 자체는 진행한다(이메일에 상황 명시).
+        emailPayload['첨부파일'] = '(업로드 실패 — 고객에게 파일 재요청 필요)';
+        emailPayload['첨부파일명'] = file.name;
+      }
+    }
 
     // 이메일(주 채널)과 DB 저장(부가)을 서로 독립적으로 실행.
     // Supabase가 정지·장애 상태여도 이메일 발송은 영향을 받지 않는다.
     const [emailResult, dbResult] = await Promise.allSettled([
       sendEmailNotification(emailPayload),
-      saveInquiryToSupabase({ name, contact, message }),
+      saveInquiryToSupabase({ name, contact, message, filePath }),
     ]);
 
     const emailOk = emailResult.status === 'fulfilled';
