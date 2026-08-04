@@ -138,23 +138,24 @@
   </script>
 </head>
 <body>
-  <div class="badge-image">
-    <img src="변호사뱃지.png" alt="법률사무소 영란 엠블럼" />
+  <!-- 배경 장식용 워터마크(같은 로고가 아래 h1에도 있으므로 보조기기에서는 숨김) -->
+  <div class="badge-image" aria-hidden="true">
+    <img src="변호사뱃지.png" alt="" />
   </div>
   <main class="page-layout">
     <section class="hero-section">
       <div class="hero-image">
         <img src="의자(배경제거).png" alt="박영란 변호사 이미지" />
       </div>
-      <div class="hero-copy">
+      <header class="hero-copy">
         <p class="hero-tagline">당신과 함께하는 <br class="tagline-break" />법률전문 전략파트너</p>
-        <div class="hero-title">
-          <img class="hero-emblem" src="변호사뱃지.png" alt="법률사무소 영란 로고" />
+        <h1 class="hero-title">
+          <img class="hero-emblem" src="변호사뱃지.png" alt="" />
           <span class="hero-title-text">
             <span class="hero-role">법률사무소</span>
             <span class="hero-name">영란</span>
           </span>
-        </div>
+        </h1>
         <div class="hero-text">
           <p>어떤 상황에서도 빠르게 판단하고 효과적으로 대응합니다.</p>
           <p>
@@ -178,10 +179,11 @@
             법률사무소 영란 블로그
           </a>
         </div>
-      </div>
+      </header>
     </section>
 
     <section class="profile-section">
+      <h2 class="sr-only">변호사 박영란 소개 — 약력 및 주요활동</h2>
       <div class="profile-grid">
         <div class="profile-block">
           <h3 class="profile-subtitle">약력</h3>
@@ -249,26 +251,26 @@
         <h2>자주 묻는 질문</h2>
       </div>
       <div class="faq-list">
-        <div class="faq-item">
+        <article class="faq-item">
           <h3 class="faq-q">법률사무소 영란은 어떤 분야를 다루나요?</h3>
           <p class="faq-a">박영란 변호사는 여러 기관에서 쌓은 폭넓고 다양한 실무 경험을 바탕으로 행정·형사·민사 등 여러 분야의 사건을 두루 다룹니다. 이러한 다양한 경험을 사건 전략에 적극 활용하여 의뢰인의 방어권을 지키는 데 매우 능합니다.</p>
-        </div>
-        <div class="faq-item">
+        </article>
+        <article class="faq-item">
           <h3 class="faq-q">징계·해고 사건도 다루나요?</h3>
           <p class="faq-a">네, 특히 강점을 가진 분야입니다. 박영란 변호사는 오랜 직장 생활과 감사실 근무 경력을 바탕으로 징계·해고 관련 사건을 다수 다뤄왔습니다. 특히 직장 내 괴롭힘·성희롱 사건의 조사 업무를 직접 수행한 경험이 있으며, 여러 기관의 징계위원·인사위원·소청심사위원으로 활동해 인사·징계 절차를 실무의 안팎에서 깊이 이해하고 있습니다.</p>
-        </div>
-        <div class="faq-item">
+        </article>
+        <article class="faq-item">
           <h3 class="faq-q">상담은 어떻게 예약하나요?</h3>
           <p class="faq-a">062-223-2030으로 전화 주시거나, 이 페이지 하단의 상담·문의 폼에 내용을 남겨주시면 확인 후 연락드립니다.</p>
-        </div>
-        <div class="faq-item">
+        </article>
+        <article class="faq-item">
           <h3 class="faq-q">사무실은 어디에 있나요?</h3>
           <p class="faq-a">광주광역시 동구 지산로73, 광주지방법원·광주지방검찰청 바로 앞에 있습니다. 법원·검찰청 정문에서 바라보면 사무실 간판이 보일 만큼 가깝고, 건물에 지하주차장(유료)이 있어 차량으로 오셔도 편리합니다.</p>
-        </div>
-        <div class="faq-item">
+        </article>
+        <article class="faq-item">
           <h3 class="faq-q">온라인으로 자료를 보내 상담할 수 있나요?</h3>
           <p class="faq-a">네. 홈페이지 문의 폼에서 이름·연락처·문의 내용과 함께 관련 파일(최대 10MB)을 첨부해 보내실 수 있습니다.</p>
-        </div>
+        </article>
       </div>
     </section>
 
@@ -324,6 +326,18 @@
       </form>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-name">법률사무소 영란 <span class="footer-sep">·</span> 대표변호사 박영란</p>
+      <address class="footer-address">
+        광주광역시 동구 지산로73
+        <span class="footer-sep">·</span>
+        전화 <a href="tel:062-223-2030">062-223-2030</a>
+      </address>
+      <p class="footer-copy">&copy; 2026 법률사무소 영란. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
   <!-- Vercel Web Analytics -->
