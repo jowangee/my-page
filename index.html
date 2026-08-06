@@ -44,6 +44,9 @@
   <link href="https://cdn.jsdelivr.net/gh/fonts-archive/NanumSquareRound/NanumSquareRound.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 
+  <!-- 클라우드플레어 Turnstile (문의 폼 스팸 로봇 차단) -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
   <!-- 구조화 데이터 (검색결과 리치 정보) -->
   <script type="application/ld+json">
   {
@@ -320,6 +323,14 @@
           <label for="attachment">첨부파일 <span class="optional">(선택 · 최대 10MB)</span></label>
           <input type="file" id="attachment" name="attachment" />
         </div>
+        <!-- 스팸 로봇 차단 위젯. 통과하면 cf-turnstile-response 값이 폼에 자동으로 담긴다. -->
+        <div
+          class="cf-turnstile"
+          data-sitekey="0x4AAAAAAEHyT0XNcHye1Pw2"
+          data-theme="light"
+          data-language="ko"
+        ></div>
+
         <button type="submit" id="submitBtn">문의 보내기</button>
         <p class="form-note">해당내용은 &lt;법률사무소 영란&gt;의 이메일로 발송됩니다.</p>
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
